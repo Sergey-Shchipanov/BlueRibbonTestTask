@@ -1,5 +1,6 @@
 package com.shchipanov.bluerbn.controllers;
 
+import com.shchipanov.bluerbn.dao.Coupon;
 import com.shchipanov.bluerbn.dto.CouponValidationDTO;
 import com.shchipanov.bluerbn.services.BaggageCheckInService;
 import com.shchipanov.bluerbn.services.CouponValidationService;
@@ -40,7 +41,9 @@ public class FlightAppController {
 
     @GetMapping("/validateCoupon")
     public CouponValidationDTO validateCoupon(@RequestParam int couponId, @RequestParam double price) {
-
-        return new CouponValidationDTO();
+        log.debug(String.format("Applying coupon %d to price %f", couponId, price));
+        CouponValidationDTO result = couponValidationService.validateCoupon(couponId, price);
+        log.debug(String.format("Coupon %d is valid = %b", couponId, result.isCouponValid()));
+        return result;
     }
 }

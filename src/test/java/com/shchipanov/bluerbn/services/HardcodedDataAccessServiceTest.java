@@ -15,6 +15,8 @@ class HardcodedDataAccessServiceTest {
 
     @Test
     void getCouponById() {
+        assertEquals(100, new HardcodedDataAccessService().getCouponById(100).getCouponId());
+        assertNotEquals(11, new HardcodedDataAccessService().getCouponById(11).getCouponId());
     }
 
     @Test
