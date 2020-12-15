@@ -13,17 +13,32 @@ repositories {
 }
 
 dependencies {
+	compileOnly 'org.projectlombok:lombok:1.18.16'
+	annotationProcessor 'org.projectlombok:lombok:1.18.16'
 	implementation ('org.springframework.boot:spring-boot-starter') {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 	}
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compile('org.springframework.boot:spring-boot-starter-log4j2')
-	compileOnly 'org.projectlombok:lombok:1.18.16'
-	annotationProcessor 'org.projectlombok:lombok:1.18.16'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.0'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.0'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+	testCompileOnly 'org.projectlombok:lombok:1.18.16'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+	testCompile('org.springframework.boot:spring-boot-starter-log4j2')
 }
 
 test {
 	useJUnitPlatform()
+}
+
+configurations {
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
 }

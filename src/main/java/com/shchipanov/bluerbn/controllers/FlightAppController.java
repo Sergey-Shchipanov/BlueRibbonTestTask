@@ -4,13 +4,13 @@ import com.shchipanov.bluerbn.dto.CouponValidationDTO;
 import com.shchipanov.bluerbn.services.BaggageCheckInService;
 import com.shchipanov.bluerbn.services.CouponValidationService;
 import com.shchipanov.bluerbn.services.TicketCheckService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/flightApp")
+@Log4j2
+@RestController
+@RequestMapping("flightApp")
 public class FlightAppController {
 
     @Autowired
@@ -22,19 +22,21 @@ public class FlightAppController {
     @Autowired
     private BaggageCheckInService baggageCheckInService;
 
-    @GetMapping(path = "/ticketAvailable")
-    public boolean checkTicketAvailable(@RequestParam int ticketId) {
-
-        return false;
+    @GetMapping("/ticketAvailable")
+    public boolean checkTicketAvailable(@RequestParam Integer ticketId) {
+        log.debug(String.format("Check ticket: %d is valid", ticketId));
+        boolean result = ticketCheckService.checkTicketAvailable(ticketId);
+        log.debug(String.format("Check ticket: %d is valid = %b", ticketId, result));
+        return result;
     }
 
-    @PostMapping(path = "/baggageCheckIn")
+    @PostMapping("/baggageCheckIn")
     public boolean baggageCheckIn(@RequestParam int destinationId, @RequestParam String baggageId) {
 
         return false;
     }
 
-    @GetMapping(path = "/validateCoupon")
+    @GetMapping("/validateCoupon")
     public CouponValidationDTO validateCoupon(@RequestParam int couponId, @RequestParam double price) {
 
         return new CouponValidationDTO();

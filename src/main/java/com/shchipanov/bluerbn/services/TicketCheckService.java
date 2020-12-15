@@ -1,12 +1,28 @@
 package com.shchipanov.bluerbn.services;
 
+import com.shchipanov.bluerbn.dao.Ticket;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class TicketCheckService {
 
-    public boolean checkTicketAvailable(int ticketId) {
+    @Autowired
+    DataAccessService dataAccessService;
 
-        return false;
+    public boolean checkTicketAvailable(int ticketId) {
+        log.debug(String.format("check ticket id: %d", ticketId));
+        Ticket ticketFromDataAccessService = dataAccessService.getTicketById(ticketId);
+        log.debug("Ticket from data source:" + ticketFromDataAccessService);
+
+        if (ticketFromDataAccessService.getTicketId() != ticketId) {
+            log.debug(String.format("Ticket wasn't found id %d is invalid", ticketId));
+            return false;
+        } else {
+            log.debug(String.format("Ticket was found id %d is valid", ticketId));
+            return true;
+        }
     }
 }

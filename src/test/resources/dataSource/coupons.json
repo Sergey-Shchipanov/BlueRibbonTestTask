@@ -1,0 +1,26 @@
+[
+  {
+    "couponId" : 100,
+    "discountPercent" : 10
+  },
+  {
+    "couponId" : 200,
+    "discountPercent" : 20
+  },
+  {
+    "couponId" : 300,
+    "discountPercent" : 30
+  },
+  {
+    "couponId" : 400,
+    "discountPercent" : 40
+  },
+  {
+    "couponId" : 500,
+    "discountPercent" : 50
+  },
+  {
+    "couponId" : 600,
+    "discountPercent" : 60
+  }
+]
