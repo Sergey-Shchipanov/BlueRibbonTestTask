@@ -19,5 +19,7 @@ class HardcodedDataAccessServiceTest {
 
     @Test
     void getDestinationById() {
+        assertEquals(11, new HardcodedDataAccessService().getDestinationById(11).getDestinationId());
+        assertNotEquals(111111, new HardcodedDataAccessService().getDestinationById(111111).getDestinationId());
     }
 }

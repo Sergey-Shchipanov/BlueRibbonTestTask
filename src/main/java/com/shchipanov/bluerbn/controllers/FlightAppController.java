@@ -32,8 +32,10 @@ public class FlightAppController {
 
     @PostMapping("/baggageCheckIn")
     public boolean baggageCheckIn(@RequestParam int destinationId, @RequestParam String baggageId) {
-
-        return false;
+        log.debug(String.format("Check in baggage %s to destination %d", baggageId, destinationId));
+        boolean result = baggageCheckInService.checkInBaggage(baggageId, destinationId);
+        log.debug("Check in result: " + result);
+        return result;
     }
 
     @GetMapping("/validateCoupon")

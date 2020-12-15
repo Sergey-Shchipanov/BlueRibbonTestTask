@@ -27,7 +27,6 @@ public class HardcodedDataAccessService implements DataAccessService {
             log.error("Something went wrong", exception);
             throw new IllegalStateException("Error accessing dataSource", exception);
         }
-
     }
 
     public Coupon getCouponById(int couponId) {
@@ -36,7 +35,16 @@ public class HardcodedDataAccessService implements DataAccessService {
     }
 
     public Destination getDestinationById(int destinationId) {
-
-        return new Destination();
+        log.debug("Search destination by id: " + destinationId);
+        try {
+            URL destinationsFilePath = new ClassPathResource("dataSource/destinations.json", this.getClass().getClassLoader()).getURL();
+            List<Destination> destinations = new ObjectMapper().readValue(destinationsFilePath, new TypeReference<>(){});
+            log.debug("All tickets count: " + destinations.size());
+            return destinations.stream().filter(ticket -> ticket.getDestinationId() == destinationId)
+                    .findFirst().orElse(new Destination());
+        } catch (Exception exception) {
+            log.error("Something went wrong", exception);
+            throw new IllegalStateException("Error accessing dataSource", exception);
+        }
     }
 }
